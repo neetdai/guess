@@ -1,6 +1,4 @@
-# websocket的协议
-
-[参考资料](http://zeeyang.com/2017/07/02/websocket/)
+# websocket 实现原理
 
 首先,我们先在本机设置监听端口.
 
@@ -8,7 +6,7 @@
 
 然后,新建html文件.在javascript部分写上
 
-    ````
+``` html
     <script type="text/javascript">
         let sock = new WebSocket("ws://127.0.0.1:9999"); //注意! 这里的地址协议是ws而不是http,代表使用websocket协议
 
@@ -31,7 +29,7 @@
             }
         };
     </script>
-    ````
+```
 
 然后保存html文件并刷新一下浏览器,看看监听了什么内容?
 
@@ -79,8 +77,6 @@
 我们需要注意的是Sec-WebSocket-Accept,这个是将刚才获取到的Sec-WebSocket-Key跟一个固定的一串全局唯一的标识字符串（俗称魔串）258EAFA5-E914-47DA- 95CA-C5AB0DC85B11进行拼接,拼接过后的字符串需要使用 SHA-1 进行散列处理,接着将结果进行 base64 编码
 
 ok,我们现在已经握手完毕
-
----
 
 ### 服务器接收消息
 
@@ -154,7 +150,7 @@ Payload len 表示消息是否有用扩展字节标识消息的长度.有三个�
 
 消息中的字节要根据位置与mask的字节进行解码(用python作为示例)
 
-```
+``` python
 message = ''
 i = 0
 for d in data:
@@ -171,3 +167,7 @@ for d in data:
 第二步就稍微有点不同的.一开始不需要设置 MASK 是否为1,因为浏览器不需要解码(至少在实践中是这样的),然后还是要给 Payload 按照解码那样设置消息的长度
 
 第三部就是将消息转成字节,然后发送出去
+
+## 参考资料
+
+[WebSocket 实现原理](http://zeeyang.com/2017/07/02/websocket/)
