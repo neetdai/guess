@@ -155,7 +155,7 @@ message = ''
 i = 0
 for d in data:
     message += chr(d ^ mask[i % 4])
-    i++
+    i += 1
 ```
 
 ## 服务器发送消息
